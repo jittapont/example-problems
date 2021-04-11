@@ -87,6 +87,19 @@ func buddyStrings(a string, b string) bool {
 	}
 }
 
+func runningSum(nums []int) []int {
+    sum := 0
+    for i:=0; i < len(nums); i++ {
+        if i == 0 {
+            sum = nums[i]
+        } else {
+            sum += nums[i]
+            nums[i] = sum   
+        }
+    }
+    return nums   
+}
+
 func main() {
 	fmt.Println(longestCommonPrefix([]string{"flower", "floor", "florida"}))
 	fmt.Println(longestCommonPrefix2([]string{"flower", "floor", "florida"}))
