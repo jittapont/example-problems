@@ -100,6 +100,30 @@ func runningSum(nums []int) []int {
     return nums   
 }
 
+func Solequa(n int) [][]int {
+	s := make([][]int, 0)
+	m := make(map[[2]int]bool)
+	for i := n; i > 0; i-- {
+		var max, min int
+		if n%i == 0 {
+			if i >= (n / i) {
+				max = i
+				min = (n / i)
+			} else {
+				min = i
+				max = (n / i)
+			}
+			x := (max + min) / 2
+			y := (max - min) / 4
+			if (max-min)%4 == 0 && !m[[2]int{x, y}] {
+				s = append(s, []int{x, y})
+				m[[2]int{x, y}] = true
+			}
+		}
+	}
+	return s
+}
+
 func main() {
 	fmt.Println(longestCommonPrefix([]string{"flower", "floor", "florida"}))
 	fmt.Println(longestCommonPrefix2([]string{"flower", "floor", "florida"}))
