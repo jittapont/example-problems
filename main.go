@@ -5,6 +5,28 @@ import (
 	"sort"
 )
 
+func Josephus(items []interface{}, k int) []interface{} {
+  if len(items) == 0 {
+    return []interface{}{}
+  }
+  if k > len(items) {
+    k = k % len(items)
+  }
+	skip := k - 1
+	i := skip
+	items2 := make([]interface{}, 0)
+	for {
+		v := items[i]
+		items = append(items[:i], items[i+1:]...)
+		items2 = append(items2, v)
+		if len(items) == 0 {
+			break
+		}
+		i = (i + skip) % len(items)
+	}
+	return items2
+}
+
 func longestCommonPrefix(strs []string) string {
 	if len(strs) == 0 {
 		return ""
