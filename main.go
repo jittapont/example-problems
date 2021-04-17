@@ -5,6 +5,79 @@ import (
 	"sort"
 )
 
+
+type Ans struct {
+	From  string
+	Var   string
+	Count int
+}
+
+func count(s string) map[string]int {
+	m := make(map[string]int)
+	for _, w := range s {
+		c := strings.Count(s, string(w))
+		if c > 1 && unicode.IsLetter(w) {
+			m[string(w)] = c
+		}
+
+	}
+	return m
+}
+
+func Mix(s1, s2 string) string {
+	m1 := count(strings.ReplaceAll(s1, " ", ""))
+	m2 := count(strings.ReplaceAll(s2, " ", ""))
+	a := make([]Ans, 0)
+	fmt.Println(m1, m2)
+	for k, v := range m1 {
+		_, ok := m2[k]
+		if !ok {
+			a = append(a, Ans{From: "1", Var: k, Count: v})
+		}
+	}
+	for k, v1 := range m1 {
+		v2, ok := m2[k]
+		var max int
+		var i string
+		if ok {
+			if v2 > v1 {
+				max = v2
+				i = "2"
+			} else if v1 == v2 {
+				max = v1
+				i = "="
+			} else {
+				max = v1
+				i = "1"
+			}
+			a = append(a, Ans{From: i, Var: k, Count: max})
+		}
+	}
+	for k, v := range m2 {
+		_, ok := m1[k]
+		if !ok {
+			a = append(a, Ans{From: "2", Var: k, Count: v})
+		}
+	}
+	sort.Slice(a, func(i, j int) bool {
+		if a[i].Count != a[j].Count {
+			return a[i].Count > a[j].Count
+		}
+		switch strings.Compare(a[i].Var, a[j].Var) {
+		case -1:
+			return true
+		case 1:
+			return false
+		}
+		return false
+	})
+	a2 := make([]string, 0)
+	for _, i := range a {
+		a2 = append(a2, i.From+":"+strings.Repeat(i.Var, i.Count))
+	}
+	return strings.Join(a2, "/")
+}
+
 func Josephus(items []interface{}, k int) []interface{} {
   if len(items) == 0 {
     return []interface{}{}
