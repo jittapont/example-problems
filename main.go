@@ -27,6 +27,26 @@ func Josephus(items []interface{}, k int) []interface{} {
 	return items2
 }
 
+func rotate(s string) string {
+	if len(s) < 1 {
+		return s
+	}
+	return string(s[1:]) + string(s[0])
+}
+
+func MaxRot(n int64) int64 {
+	s := strconv.Itoa(int(n))
+	max := int(n)
+	for i := 0; i < len(s)-1; i++ {
+		s = s[0:i] + rotate(s[i:])
+		temp, _ := strconv.Atoi(s)
+		if temp > max {
+			max = temp
+		}
+	}
+	return int64(max)
+}
+
 func longestCommonPrefix(strs []string) string {
 	if len(strs) == 0 {
 		return ""
