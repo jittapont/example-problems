@@ -78,6 +78,17 @@ func Mix(s1, s2 string) string {
 	return strings.Join(a2, "/")
 }
 
+func Solution(str string) []string {
+	if len(str)%2 != 0 {
+		str += strings.Repeat("_", ((len(str)/2)+1)*2-len(str))
+	}
+	st := []string{}
+	for i := 0; i < len(str)-1; i+=2 {
+		st = append(st, string([]rune(str)[i:i+2]))
+	}
+	return st
+}
+
 func Josephus(items []interface{}, k int) []interface{} {
   if len(items) == 0 {
     return []interface{}{}
