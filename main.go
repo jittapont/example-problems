@@ -100,6 +100,19 @@ func Josephus(items []interface{}, k int) []interface{} {
 	return items2
 }
 
+func FindOutlier(integers []int) int {
+	if (integers[0]%2 == 0) != (integers[1]%2 == 0) && (integers[1]%2 == 0) == (integers[2]%2 == 0) {
+		return integers[0]
+	}
+	for i, v := range integers[1:] {
+		fmt.Println(integers[i], v)
+		if (integers[i]%2 == 0) != (v%2 == 0) {
+			return v
+		}
+	}
+	return 0
+}
+
 func rotate(s string) string {
 	if len(s) < 1 {
 		return s
